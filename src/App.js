@@ -1,11 +1,14 @@
 
 import './App.css';
+import NavBar from './components/NavBar';
+import { Typography } from '@material-ui/core';
 
 function App() {
   return (
     <>
-    <h1>Bienvenidos al Coder-Commerce!</h1>
-    <p>podrás hacer todas tus compras sin moverte de tu casa</p>
+    <NavBar/>
+    <Typography variant="h5">Bienvenidos al Coder-Commerce!</Typography>
+    <Typography paragraph variant="body1">podrás hacer todas tus compras sin moverte de tu casa</Typography>
     </>
   );
 }
