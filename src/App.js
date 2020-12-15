@@ -7,6 +7,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {blue, orange} from '@material-ui/core/colors/blue';
 import { red } from '@material-ui/core/colors';
 import { ItemListContainer } from './components/ItemListContainer';
+import { ItemCountButtons } from './components/ItemCountButtons';
 
 const theme = createMuiTheme({
   palette: {
@@ -24,6 +25,7 @@ function App() {
         <Divider />
         <Typography paragraph variant="body1">podrás hacer todas tus compras sin moverte de tu casa</Typography>
       </ThemeProvider>
+      <ItemCountButtons initial={0} stock={10} onAdd={()=>{console.log("Agregaste productos al carrito")}} />
     </>
   );
 }
