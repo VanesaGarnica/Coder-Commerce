@@ -1,14 +1,17 @@
 import { Divider, Typography } from "@material-ui/core"
 
-const ItemListContainer = () => {
+const ItemListContainer = ({ header, greeting }) => {
 
-    return(
+    return (
         <>
-        <Typography>
-            Lorem ipsum dolor sit amet.
-        </Typography>
+            <Typography variant="h5">
+                {header}
+            </Typography>
+            <Typography variant="h6">
+                {greeting}
+            </Typography>
         </>
-    )   
+    )
 }
 
-export {ItemListContainer};
+export { ItemListContainer };
