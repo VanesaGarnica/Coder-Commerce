@@ -1,23 +1,26 @@
 import { ItemDetail } from './ItemDetail';
 import React from 'react';
+import { arrayDeItems } from '../mock/arrayDeItems';
+import { useParams } from 'react-router-dom';
 
-const itemData = {
-    title: "Disfraz de payaso",
-    description: "Payaso gatuno",
-    price: 699.99,
-    pictureUrl: "https://i.pinimg.com/originals/11/36/ce/1136ce4c33066a4093b288debad4a863.jpg"
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-async function getItem() {
-    await sleep(2000);
-    return itemData;
-}
 
 
 const ItemDetailContainer = () => {
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    async function getItem() {
+        await sleep(500);
+        console.log(item_id);
+        return arrayDeItems[item_id];
+    }
+    const { item_id } = useParams();
+    // React.useEffect(() => {
+    //     console.log("received item_id to: ", item_id);
+    //     return () => {
+    //         console.log("will change item_id to: ", item_id);
+    //     }
+    // }, [item_id]);
 
     const [item, setItem] = React.useState(undefined);
 

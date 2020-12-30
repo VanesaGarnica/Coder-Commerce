@@ -3,12 +3,15 @@ import PetsIcon from '@material-ui/icons/Pets';
 import { Carrito } from './CartWidget';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { red, teal } from '@material-ui/core/colors';
+import { NavLink } from 'react-router-dom'
 
 const theme = createMuiTheme({
-  palette: {
-    primary: teal,
-  },
+    palette: {
+        primary: teal,
+    },
 });
+
+const navLink = { textDecoration: "none", color: "white" };
 
 export const NavBar = () => {
     return (
@@ -16,20 +19,32 @@ export const NavBar = () => {
             <AppBar position="static" color="primary">
                 <Toolbar >
                     <Grid container item alignItems="center">
-                        <PetsIcon style={{margin:"10px"}} />
-                        <Typography variant="h6" style={{ flexGrow: 1 }}>
-                            CatHero^^
-                        </Typography>
-                        <Button color="inherit">
-                            Categorias
-                        </Button>
-                        <Button color="inherit">
-                            Promociones
-                        </Button>
-                        <Button color="inherit">
-                            Mas vendidos
-                        </Button>
-                        <Carrito/>
+                        <NavLink to="/" style={{ textDecoration: "none", color: "white", flexGrow: 1 }}>
+                            <Grid container item alignItems="center">
+                                <PetsIcon style={{ margin: "10px" }} />
+                                <Typography variant="h6">
+                                    Cat Hero Feline Costumes
+                                </Typography>
+                            </Grid>
+                        </NavLink>
+                        <NavLink to="/category/animales" style={navLink}>
+                            <Button color="inherit">
+                                Animales
+                            </Button>
+                        </NavLink>
+                        <NavLink to="/category/profesiones" style={navLink}>
+                            <Button color="inherit">
+                                Profesiones
+                            </Button>
+                        </NavLink>
+                        <NavLink to="/category/peliculas" style={navLink}>
+                            <Button color="inherit">
+                                Peliculas
+                            </Button>
+                        </NavLink>
+                        <NavLink to="/cart" style={navLink}>
+                            <Carrito />
+                        </NavLink>
                     </Grid>
                 </Toolbar>
             </AppBar>

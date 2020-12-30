@@ -1,25 +1,8 @@
 import { Divider, Typography } from "@material-ui/core"
 import { ItemList } from "./ItemList"
 import { useState, useEffect } from "react";
-
-
-const arrayDeItems = [
-    {
-        id: 1,
-        title: "Disfraz de leon",
-        description: "Pequeño leoncito",
-        price: 499.99,
-        pictureUrl: "https://images-na.ssl-images-amazon.com/images/I/91Gb%2B0e-zLL._AC_SX466_.jpg"
-    },
-    {
-        id: 2,
-        title: "Disfraz de payaso",
-        description: "Payaso gatuno",
-        price: 699.99,
-        pictureUrl: "https://i.pinimg.com/originals/11/36/ce/1136ce4c33066a4093b288debad4a863.jpg"
-    }
-]
-
+import { arrayDeItems } from "../mock/arrayDeItems";
+import { useParams } from "react-router-dom";
 
 const ItemListContainer = ({ header, greeting }) => {
 
@@ -28,19 +11,25 @@ const ItemListContainer = ({ header, greeting }) => {
         obtenerDatosItems();
     });
 
+    function filtrarCategoria(item) {
+        return item.category === category_name;
+    }
+
     const obtenerDatosItems = () => {
         setTimeout(() => {
-            setEstadoItems(arrayDeItems);
-        }, 2000);
+            let itemsFiltradosCategoria = arrayDeItems.filter(filtrarCategoria);
+            setEstadoItems(category_name? itemsFiltradosCategoria : arrayDeItems);
+        }, 500);
     }
+    const { category_name } = useParams();
 
     return (
         <>
             <Typography variant="h5">
-                {header}
+                {category_name ? category_name : header}
             </Typography>
             <Typography variant="h6">
-                {greeting}
+                {category_name ? "" : greeting}
             </Typography>
             <ItemList items={estadoItems} />
         </>
