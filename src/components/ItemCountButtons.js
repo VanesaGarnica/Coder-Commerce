@@ -31,7 +31,7 @@ const ItemCountButtons = ({ stock, initial, onAdd }) => {
                     variant="contained"
                     size="small"
                     disableElevation
-                    onClick={onAdd}
+                    onClick={() => { onAdd(amount) }}
                 >
                     Agregar al carrito
                 </Button>
