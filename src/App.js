@@ -11,6 +11,8 @@ import { ItemListContainer } from './components/ItemListContainer';
 import { ItemDetailContainer } from './components/ItemDetailContainer';
 import { ItemCountButtons } from './components/ItemCountButtons';
 import { Cart } from './components/Cart';
+import { Store } from './store';
+import { useState } from 'react';
 
 const theme = createMuiTheme({
   palette: {
@@ -19,39 +21,47 @@ const theme = createMuiTheme({
 });
 
 
+
 function App() {
+
+  const [data, setData] = useState({
+    items: [],
+    cantidad: 0
+  })
+
   return (
     <BrowserRouter>
-
-      <ThemeProvider theme={theme}>
-        <NavBar />
-        <Grid item container direction="row" xs={12}>
-          <Grid item xs />
-          <Grid item container xs={11}>
-            <Switch>
-              <Route exact path="/">
-                <ItemListContainer header="Contenido principal" greeting="Bienvenidos a mi tienda." />
-              </Route>
-              <Route path="/category/:category_name?">
-                <ItemListContainer />
-              </Route>
-              <Route path="/detail/:item_id">
-                <ItemDetailContainer />
-              </Route>
-              <Route path="/cart">
-                <Cart />
-              </Route>
-              {/* <Route path="/checkout">
+      <Store.Provider value={[data, setData]}>
+        <ThemeProvider theme={theme}>
+          <NavBar />
+          <Grid item container direction="row" xs={12}>
+            <Grid item xs />
+            <Grid item container xs={11}>
+              <Switch>
+                <Route exact path="/">
+                  <ItemListContainer header="Contenido principal" greeting="Bienvenidos a mi tienda." />
+                </Route>
+                <Route path="/category/:category_name?">
+                  <ItemListContainer />
+                </Route>
+                <Route path="/detail/:item_id">
+                  <ItemDetailContainer />
+                </Route>
+                <Route path="/cart">
+                  <Cart />
+                </Route>
+                {/* <Route path="/checkout">
             <Checkout />
           </Route>
           <Route path="*">
-            <Error404 />
+          <Error404 />
           </Route> */}
-            </Switch>
+              </Switch>
+            </Grid>
+            <Grid item xs />
           </Grid>
-          <Grid item xs />
-        </Grid>
-      </ThemeProvider>
+        </ThemeProvider>
+      </Store.Provider>
     </BrowserRouter>
 
   );

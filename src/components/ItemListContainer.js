@@ -1,4 +1,4 @@
-import { Divider, Typography } from "@material-ui/core"
+import { Typography } from "@material-ui/core"
 import { ItemList } from "./ItemList"
 import { useState, useEffect } from "react";
 import { arrayDeItems } from "../mock/arrayDeItems";
@@ -18,7 +18,7 @@ const ItemListContainer = ({ header, greeting }) => {
     const obtenerDatosItems = () => {
         setTimeout(() => {
             let itemsFiltradosCategoria = arrayDeItems.filter(filtrarCategoria);
-            setEstadoItems(category_name? itemsFiltradosCategoria : arrayDeItems);
+            setEstadoItems(category_name ? itemsFiltradosCategoria : arrayDeItems);
         }, 500);
     }
     const { category_name } = useParams();

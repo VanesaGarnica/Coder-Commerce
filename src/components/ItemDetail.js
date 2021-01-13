@@ -1,26 +1,37 @@
 import React from 'react'
 import { Grid, Card, CardHeader, CardMedia, CardContent, Typography, Button, Box } from '@material-ui/core';
 import { ItemCountButtons } from './ItemCountButtons';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
+import { Store } from '../store';
 
-const buttonFinalizarCompra = (
-    <Box textAlign="center">
-        <p />
-        <NavLink to="/cart" style={{ textDecoration: "none", color: "black" }}>
-            <Button variant="contained" disableElevation>
-                Finalizar Compra
-            </Button>
-        </NavLink>
-    </Box>
-);
 
 const ItemDetail = ({ item }) => {
+
+    const history = useHistory();
+    const [data, setData] = React.useContext(Store);
+    const [cantidadEnCarrito, setCantidadEnCarrito] = React.useState(0);
+
+    const buttonFinalizarCompra = (
+        <Box textAlign="center">
+            <p />
+            <Button variant="contained" disableElevation onClick={() => {
+                history.push('/cart');
+            }}>
+                Finalizar Compra
+            </Button>
+        </Box>
+    );
+
 
     const onAgregarAlCarrito = (cantidad) => {
         console.log(`Agregados al carrito: ${cantidad}`)
         setCantidadEnCarrito(cantidad);
+        setData({
+            ...data,
+            cantidad: data.cantidad + cantidad,
+            items: [...data.items, { item: item, quantity: cantidad }],
+        });
     }
-    const [cantidadEnCarrito, setCantidadEnCarrito] = React.useState(0);
 
     return (
         <>
