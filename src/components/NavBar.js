@@ -1,6 +1,6 @@
 import { AppBar, Typography, Toolbar, Button, Grid } from '@material-ui/core';
 import PetsIcon from '@material-ui/icons/Pets';
-import { Carrito } from './CartWidget';
+import { CartWidget } from './CartWidget';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { red, teal } from '@material-ui/core/colors';
 import { NavLink } from 'react-router-dom'
@@ -43,7 +43,7 @@ export const NavBar = () => {
                             </Button>
                         </NavLink>
                         <NavLink to="/cart" style={navLink}>
-                            <Carrito />
+                            <CartWidget />
                         </NavLink>
                     </Grid>
                 </Toolbar>

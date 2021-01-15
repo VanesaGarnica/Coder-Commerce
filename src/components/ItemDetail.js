@@ -24,13 +24,33 @@ const ItemDetail = ({ item }) => {
 
 
     const onAgregarAlCarrito = (cantidad) => {
-        console.log(`Agregados al carrito: ${cantidad}`)
         setCantidadEnCarrito(cantidad);
-        setData({
-            ...data,
-            cantidad: data.cantidad + cantidad,
-            items: [...data.items, { item: item, quantity: cantidad }],
-        });
+        let itemIndex = -1;
+        data.items.forEach((itemData, index) => {
+            if(itemData.item.id === item.id){
+                itemIndex = index;
+            }
+        })
+        if(itemIndex === -1){
+            //no pudo encontrar el item
+            setData({
+                ...data,
+                cantidad: data.cantidad + cantidad,
+                totalPagar: data.totalPagar + (cantidad * item.price),
+                items: [...data.items, { item: item, quantity: cantidad }],
+            });
+        }else{
+            //encontro el item
+            let prevQuantity = data.items[itemIndex].quantity;
+            let itemsTemp = [...data.items];
+            itemsTemp.splice(itemIndex, 1);
+            setData({
+                ...data,
+                cantidad: data.cantidad + cantidad,
+                totalPagar: data.totalPagar + (cantidad * item.price),
+                items: [...itemsTemp, { item: item, quantity: prevQuantity + cantidad }],
+            });
+        }
     }
 
     return (

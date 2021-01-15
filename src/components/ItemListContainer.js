@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { arrayDeItems } from "../mock/arrayDeItems";
 import { useParams } from "react-router-dom";
 
-const ItemListContainer = ({ header, greeting }) => {
+const ItemListContainer = ({ header }) => {
 
     const [estadoItems, setEstadoItems] = useState([]);
     useEffect(() => {
@@ -25,11 +25,8 @@ const ItemListContainer = ({ header, greeting }) => {
 
     return (
         <>
-            <Typography variant="h5">
-                {category_name ? category_name : header}
-            </Typography>
-            <Typography variant="h6">
-                {category_name ? "" : greeting}
+            <Typography variant="h5" style={{marginTop:20, marginBottom:20}}>
+                {category_name ? category_name.toUpperCase() : header.toUpperCase()}
             </Typography>
             <ItemList items={estadoItems} />
         </>

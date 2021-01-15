@@ -26,7 +26,8 @@ function App() {
 
   const [data, setData] = useState({
     items: [],
-    cantidad: 0
+    cantidad: 0,
+    totalPagar: 0
   })
 
   return (
@@ -39,7 +40,7 @@ function App() {
             <Grid item container xs={11}>
               <Switch>
                 <Route exact path="/">
-                  <ItemListContainer header="Contenido principal" greeting="Bienvenidos a mi tienda." />
+                  <ItemListContainer header="Todos los disfraces" />
                 </Route>
                 <Route path="/category/:category_name?">
                   <ItemListContainer />

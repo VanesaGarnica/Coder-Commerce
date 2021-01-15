@@ -1,15 +1,17 @@
+import React from 'react'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import IconButton from '@material-ui/core/IconButton';
+import { Store } from '../store';
 
-const Carrito = () => {
-
+const CartWidget = () => {
+    const [data, setData] = React.useContext(Store);
     return (
         <>
-            <IconButton  color="inherit" aria-label="add to shopping cart">
-                <ShoppingCartIcon />
-            </IconButton>
+            {
+                data.cantidad > 0 && <IconButton color="inherit"><ShoppingCartIcon />{data.cantidad}</IconButton>
+            }
         </>
     )
 }
 
-export { Carrito };
+export { CartWidget };
