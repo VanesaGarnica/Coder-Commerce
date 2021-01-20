@@ -1,30 +1,37 @@
 import { ItemDetail } from './ItemDetail';
 import React from 'react';
-import { arrayDeItems } from '../mock/arrayDeItems';
 import { useParams } from 'react-router-dom';
-
+import { getFirestore } from '../db'
+import { LoadingPage } from './LoadingPage';
 
 
 const ItemDetailContainer = () => {
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    async function getItem() {
-        await sleep(500);
-        return arrayDeItems[item_id];
-    }
     const { item_id } = useParams();
-
     const [item, setItem] = React.useState(undefined);
-
-    const obtenerDatos = async () => {
-        const data = (await getItem());
-        setItem(data);
-    };
+    const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {
-        obtenerDatos();
-    }, [])
+        const docRef = getFirestore().collection("items").doc(item_id);
+        setLoading(true);
+        docRef.get()
+            .then(
+                (doc) => {
+                    if (doc.exists) {
+                        setItem(doc.data());
+                    } else {
+                        console.log("El documento no existe.");
+                    }
+                    setLoading(false);
+                }
+            )
+            .catch(e => { console.log(e) })
+    }, [item_id])
+
+    if (loading) {
+        return (
+            <LoadingPage />
+        )
+    }
 
     return (
         <>

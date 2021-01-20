@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, CardContent, CardHeader, Chip, Grid, IconButton, Typography } from '@material-ui/core';
+import { Avatar, Button, Card, CardContent, CardHeader, Grid, IconButton } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import React from 'react'
 import { useHistory } from 'react-router-dom';

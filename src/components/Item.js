@@ -1,4 +1,4 @@
-import { Divider, Typography, Card, Grid, CardHeader, Avatar, CardMedia, CardContent } from "@material-ui/core"
+import { Card, Grid, CardHeader, CardMedia } from "@material-ui/core"
 import { NavLink } from "react-router-dom";
 
 const Item = ({ item }) => {

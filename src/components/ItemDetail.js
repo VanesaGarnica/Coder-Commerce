@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Card, CardHeader, CardMedia, CardContent, Typography, Button, Box } from '@material-ui/core';
 import { ItemCountButtons } from './ItemCountButtons';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Store } from '../store';
 
 
