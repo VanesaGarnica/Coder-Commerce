@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const Item = ({ item }) => {
 
     return (
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={2} >
             <NavLink to={`/detail/${item.id}`} style={{textDecoration:"none"}}>
                 <Card>
                     <CardHeader
