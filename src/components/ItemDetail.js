@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Store } from '../store';
 
 
-const ItemDetail = ({ item }) => {
+const ItemDetail = ({ item, item_id }) => {
 
     const history = useHistory();
     const [data, setData] = React.useContext(Store);
@@ -17,7 +17,7 @@ const ItemDetail = ({ item }) => {
             <Button variant="contained" disableElevation onClick={() => {
                 history.push('/cart');
             }}>
-                Finalizar Compra
+                Ir al carrito
             </Button>
         </Box>
     );
@@ -27,19 +27,21 @@ const ItemDetail = ({ item }) => {
         setCantidadEnCarrito(cantidad);
         let itemIndex = -1;
         data.items.forEach((itemData, index) => {
-            if(itemData.item.id === item.id){
+            console.log(itemData.id);
+            console.log(item_id);
+            if (itemData.id === item_id) {
                 itemIndex = index;
             }
         })
-        if(itemIndex === -1){
+        if (itemIndex === -1) {
             //no pudo encontrar el item
             setData({
                 ...data,
                 cantidad: data.cantidad + cantidad,
                 totalPagar: data.totalPagar + (cantidad * item.price),
-                items: [...data.items, { item: item, quantity: cantidad }],
+                items: [...data.items, { item: item, quantity: cantidad, id: item_id }],
             });
-        }else{
+        } else {
             //encontro el item
             let prevQuantity = data.items[itemIndex].quantity;
             let itemsTemp = [...data.items];
@@ -48,7 +50,7 @@ const ItemDetail = ({ item }) => {
                 ...data,
                 cantidad: data.cantidad + cantidad,
                 totalPagar: data.totalPagar + (cantidad * item.price),
-                items: [...itemsTemp, { item: item, quantity: prevQuantity + cantidad }],
+                items: [...itemsTemp, { item: item, quantity: prevQuantity + cantidad, id: item_id }],
             });
         }
     }

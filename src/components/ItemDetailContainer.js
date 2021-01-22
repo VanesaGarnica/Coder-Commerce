@@ -35,7 +35,7 @@ const ItemDetailContainer = () => {
 
     return (
         <>
-            {item ? <ItemDetail item={item} /> : null}
+            {item ? <ItemDetail item={item} item_id={item_id} /> : null}
         </>
     )
 }
