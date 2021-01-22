@@ -1,10 +1,11 @@
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, Grid, IconButton, TextField } from '@material-ui/core';
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, Grid, IconButton, TextField, Typography } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import React from 'react'
 import { useHistory } from 'react-router-dom';
 import { Store } from '../store';
 import { getFirestore } from '../db'
 import firebase from 'firebase/app';
+import { LoadingPage } from './LoadingPage';
 
 const Cart = () => {
     const [data, setData] = React.useContext(Store);
@@ -20,6 +21,7 @@ const Cart = () => {
     const [email, setEmail] = React.useState("");
     const [repetirEmail, setRepetirEmail] = React.useState("");
     const [cargandoCompra, setCargandoCompra] = React.useState(false);
+    const [orderId, setOrderId] = React.useState("");
 
     const startVaciarCarrito = () => {
         setDialogVaciarCarritoOpen(true);
@@ -75,7 +77,6 @@ const Cart = () => {
         data.items.map(
             (itemData, index) => {
                 for (let i = 0; i < itemData.quantity; i++) {
-                    console.log(itemData);
                     itemsSubir.push(
                         {
                             id: itemData.id,
@@ -96,16 +97,23 @@ const Cart = () => {
             date: firebase.firestore.Timestamp.fromDate(new Date()),
             total: data.totalPagar
         }
-        console.log(newOrder);
-        collectionRef.get()
+        setCargandoCompra(true);
+
+        collectionRef.add(newOrder)
             .then(
-                (docData) => {
-                    console.log(docData.exists ? "EXISTE" : "NO EXISTE");
+                ({ id }) => {
+                    setOrderId(id);
+                    confirmVaciarCarrito();
+                    setDialogFinalizarCompraOpen(false);
                 }
             )
             .catch(
-                e => { console.log(e) }
+                e => { console.log(e); }
             )
+            .finally(
+                () => { setCargandoCompra(false); }
+            )
+
     }
 
     const DialogVaciarCarrito = () => {
@@ -151,6 +159,27 @@ const Cart = () => {
             </DialogActions>
         </Dialog>
     )
+
+    const dialogOrdenCreada = (
+        <Dialog maxWidth="sm" fullWidth open={orderId !== ""} >
+            <DialogContent>
+                <Typography>
+                    Orden creada: {orderId}
+                </Typography>
+            </DialogContent>
+            <DialogActions>
+                <Button variant="contained" disableElevation onClick={()=>{history.push("/")}}>
+                    Volver a la tienda
+                </Button>
+            </DialogActions>
+        </Dialog>
+    )
+
+    if (cargandoCompra) {
+        return (
+            <LoadingPage />
+        )
+    }
 
     return (
         <>
@@ -219,6 +248,7 @@ const Cart = () => {
                 <Grid item xs />
             </Grid >
             {dialogFinalizarCompra}
+            {dialogOrdenCreada}
             <DialogVaciarCarrito />
         </>
     )
