@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Card, CardHeader, CardMedia, CardContent, Typography, Button, Box } from '@material-ui/core';
+import { Grid, Card, CardHeader, CardMedia, CardContent, Typography, Button, Box, Avatar } from '@material-ui/core';
 import { ItemCountButtons } from './ItemCountButtons';
 import { useHistory } from 'react-router-dom';
 import { Store } from '../store';
@@ -59,30 +59,33 @@ const ItemDetail = ({ item, item_id }) => {
         <>
             <Grid container item xs={12} direction="row">
                 <Grid item xs />
-                <Grid item xs={8}>
+                <Grid item xs={12} sm={11} md={10} lg={8} xl={6}>
                     <p />
-                    <Card>
+                    <Card style={{ padding: 20 }}>
                         <CardHeader
                             // avatar={<Avatar src={item.pictureUrl} />}
                             title={item.title}
                             subheader={`$${item.price}`} />
-                        <CardMedia
-                            // className={classes.media}
-                            image={item.pictureUrl}
-                            src={item.pictureUrl}
-                            title="Contemplative Reptile"
-                            style={{ height: 500 }}
-                        />
+                        <CardMedia>
+                            <Grid container spacing={2} style={{ minHeight: 300, maxHeight: 600 }}>
+                                <Grid item xs={12} md={5} style={{ minHeight: 250 }} >
+                                    <Card style={{ width: "100%", height: "100%" }}>
+                                        <CardMedia image={item.pictureUrl} src={item.pictureUrl} style={{ height: "100%" }} />
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={12} md={7}>
+                                    <Typography paragraph>
+                                        {item.description}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </CardMedia>
                         <CardContent>
-                            <Typography variant="body1">
-                                {item.description}
-                            </Typography>
                             {cantidadEnCarrito === 0 ? (
                                 <ItemCountButtons initial={0} stock={10} onAdd={onAgregarAlCarrito} />
                             ) : buttonFinalizarCompra}
                         </CardContent>
                     </Card>
-                    < p />
                 </Grid>
                 <Grid item xs />
             </Grid>

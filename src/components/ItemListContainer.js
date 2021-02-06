@@ -1,7 +1,7 @@
-import { Typography } from "@material-ui/core"
+import { Typography, Grid, Button } from "@material-ui/core"
 import { ItemList } from "./ItemList"
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { getFirestore } from "../db";
 import { LoadingPage } from "./LoadingPage";
 
@@ -31,6 +31,8 @@ const ItemListContainer = ({ header }) => {
             .catch(e => { console.log(e) })
     }, [category_name]);
 
+    const history = useHistory();
+    
     function filtrarCategoria(item) {
         return item.category === category_name;
     }
@@ -40,14 +42,34 @@ const ItemListContainer = ({ header }) => {
             <LoadingPage />
         )
     }
-
     return (
-        <>
-            <Typography variant="h5" style={{ marginTop: 20, marginBottom: 20 }}>
-                {category_name ? category_name.toUpperCase() : header.toUpperCase()}
-            </Typography>
-            <ItemList items={items} />
-        </>
+        <Grid container>
+            <Grid item xs />
+            <Grid item container xs={12} sm={11} md={10} lg={8} xl={6}>
+                {
+                    items.length > 0 ?
+                        (
+                            <>
+                                <Typography variant="h5" style={{ marginTop: 20, marginBottom: 20 }}>
+                                    {category_name ? category_name.toUpperCase() : header.toUpperCase()}
+                                </Typography>
+                                <ItemList items={items} />
+                            </>
+                        )
+                        :
+                        (
+                            <Grid direction="column">
+                                <Typography variant="h5" style={{ marginTop: "30vh", flexGrow: 1, textAlign: "center" }}>
+                                    Lo sentimos, esta categoria no existe
+                                </Typography>
+                                <Button style={{marginTop:30}} variant="contained" onClick={() => { history.push("/") }}>Volver a la página principal</Button>
+                            </Grid>
+                        )
+                }
+
+            </Grid>
+            <Grid item xs />
+        </Grid>
     )
 }
 

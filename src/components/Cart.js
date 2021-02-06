@@ -164,7 +164,10 @@ const Cart = () => {
         <Dialog maxWidth="sm" fullWidth open={orderId !== ""} >
             <DialogContent>
                 <Typography>
-                    Orden creada: {orderId}
+                    Orden creada con exito!
+                </Typography>
+                <Typography>
+                    {`Numero de orden: ${orderId}`}
                 </Typography>
             </DialogContent>
             <DialogActions>

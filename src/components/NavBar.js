@@ -1,9 +1,12 @@
-import { AppBar, Typography, Toolbar, Button, Grid } from '@material-ui/core';
+import { useEffect, useState } from 'react';
+import { AppBar, Typography, Toolbar, Button, Grid, IconButton, Menu } from '@material-ui/core';
 import PetsIcon from '@material-ui/icons/Pets';
+import MenuIcon from '@material-ui/icons/Menu';
 import { CartWidget } from './CartWidget';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { teal } from '@material-ui/core/colors';
 import { NavLink, useHistory } from 'react-router-dom'
+import CategoriesDrawer from './CategoriesDrawer';
 
 const theme = createMuiTheme({
     palette: {
@@ -11,10 +14,43 @@ const theme = createMuiTheme({
     },
 });
 
-const navLink = { textDecoration: "none", color: "white" };
-
 export const NavBar = () => {
     const history = useHistory();
+
+    const [state, setState] = useState({
+        mobileView: false
+    })
+    const { mobileView } = state;
+
+    useEffect(() => {
+        const setResponsiveness = () => {
+            return window.innerWidth < 801
+                ? setState((prevState) => ({ ...prevState, mobileView: true }))
+                : setState((prevState) => ({ ...prevState, mobileView: false }));
+        };
+        setResponsiveness();
+        window.addEventListener("resize", () => setResponsiveness());
+    }, []);
+
+    const categories = [
+        {
+            name: "Animales",
+            url: "/category/animales"
+        },
+        {
+            name: "Profesiones",
+            url: "/category/profesiones"
+        },
+        {
+            name: "Peliculas",
+            url: "/category/peliculas"
+        },
+        {
+            name: "Otros",
+            url: "/category/otros"
+        },
+    ]
+
     return (
         <ThemeProvider theme={theme}>
             <AppBar position="static" color="primary">
@@ -28,22 +64,26 @@ export const NavBar = () => {
                                 </Typography>
                             </Grid>
                         </NavLink>
-                        <Button color="inherit" onClick={() => { history.push("/category/animales") }}>
-                            Animales
-                        </Button>
-                        <NavLink to="/category/profesiones" style={navLink}>
-                            <Button color="inherit">
-                                Profesiones
-                            </Button>
-                        </NavLink>
-                        <NavLink to="/category/peliculas" style={navLink}>
-                            <Button color="inherit">
-                                Peliculas
-                            </Button>
-                        </NavLink>
-                        <NavLink to="/cart" style={navLink}>
-                            <CartWidget />
-                        </NavLink>
+                        {
+                            !mobileView &&
+                            (
+                                <>
+                                    {
+                                        categories.map(
+                                            (category, index) => {
+                                                return (
+                                                    <Button key={index} color="inherit" onClick={() => { history.push(category.url) }}>
+                                                        {category.name}
+                                                    </Button>
+                                                )
+                                            }
+                                        )
+                                    }
+                                </>
+                            )
+                        }
+                        <CartWidget />
+                        {mobileView && <CategoriesDrawer categories={categories} />}
                     </Grid>
                 </Toolbar>
             </AppBar>
