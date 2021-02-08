@@ -19,6 +19,11 @@ const ItemDetail = ({ item, item_id }) => {
             }}>
                 Ir al carrito
             </Button>
+            <Button style={{marginLeft:20}} onClick={() => {
+                history.goBack();
+            }}>
+                Volver
+            </Button>
         </Box>
     );
 

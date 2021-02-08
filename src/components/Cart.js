@@ -6,6 +6,8 @@ import { Store } from '../store';
 import { getFirestore } from '../db'
 import firebase from 'firebase/app';
 import { LoadingPage } from './LoadingPage';
+import Lottie from 'react-lottie';
+import animationData from '../animations/46472-lurking-cat.json'
 
 const Cart = () => {
     const [data, setData] = React.useContext(Store);
@@ -160,6 +162,15 @@ const Cart = () => {
         </Dialog>
     )
 
+    const animationOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
+
     const dialogOrdenCreada = (
         <Dialog maxWidth="sm" fullWidth open={orderId !== ""} >
             <DialogContent>
@@ -169,9 +180,14 @@ const Cart = () => {
                 <Typography>
                     {`Numero de orden: ${orderId}`}
                 </Typography>
+                <Lottie options={animationOptions}
+                    height={250}
+                    width={250}
+                    isStopped={false}
+                    isPaused={false} />
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" disableElevation onClick={()=>{history.push("/")}}>
+                <Button variant="contained" disableElevation onClick={() => { history.push("/") }}>
                     Volver a la tienda
                 </Button>
             </DialogActions>
